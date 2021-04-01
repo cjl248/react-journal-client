@@ -17,7 +17,7 @@ export default function Login({ goBack }) {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault()
   }
 
@@ -41,7 +41,7 @@ export default function Login({ goBack }) {
           onChange={handleTyping}
         />
         <button className='login-button'
-          onClick={handleSubmit}>
+          onClick={handleLogin}>
           SUBMIT
         </button>
       </form>
