@@ -1,10 +1,13 @@
 import { useState } from 'react'
 
-export default function Login({ goBack }) {
+const API = "http://localhost:8000/api/v1"
+
+export default function Login({ goBack, setUserInfo }) {
 
   const [state, setState] = useState({
-    username: '',
-    password: ''
+    email: '',
+    password: '',
+    loginMessage: '',
   })
 
   const handleBack = () => goBack()
@@ -17,8 +20,33 @@ export default function Login({ goBack }) {
     })
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
+    const route = `${API}/login`
+    const config = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        'email': state.email,
+        'password': state.password
+      })
+    }
+    const response = await fetch(route, config)
+    const data = await response.json()
+    if (data.status === 'success') {
+      setUserInfo(data.data)
+      localStorage.setItem('user', JSON.stringify(data.data))
+    } else if (data.status === 'error') {
+      setState({
+        ...state,
+        email: '',
+        password: '',
+        loginMessage: data.message,
+      })
+    }
   }
 
   return (
@@ -27,10 +55,10 @@ export default function Login({ goBack }) {
       LOG IN
       <form className = 'login-form'>
         <input className='login-input'
-          placeholder='username'
+          placeholder='email'
           type='text'
-          name='username'
-          value={state.username}
+          name='email'
+          value={state.email}
           onChange={handleTyping}
         />
         <input className='login-input'
@@ -45,6 +73,7 @@ export default function Login({ goBack }) {
           SUBMIT
         </button>
       </form>
+      <div>{state.loginMessage}</div>
     </div>
   )
 }
