@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Login from './login/Login.jsx'
 import Register from './login/Register.jsx'
 
-export default function Landing() {
+export default function Landing({ setUserInfo }) {
 
   const [state, setState] = useState({
     landing: true,
@@ -58,10 +58,10 @@ export default function Landing() {
 
   const renderMain = () => {
     if (state.register) {
-      return <Register goBack={goBack} />
+      return (<Register goBack={goBack} />)
     }
     if (state.login) {
-      return <Login goBack={goBack} />
+      return (<Login goBack={goBack} setUserInfo={setUserInfo} />)
     }
     if  (state.landing) {
       return renderWelcome()

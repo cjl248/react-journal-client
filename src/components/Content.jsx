@@ -1,26 +1,41 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { useFetch } from '../hooks/useFetch.jsx'
 
-const API = "http://localhost:8000/api/v1"
+// const API = "http://localhost:8000/api/v1"
 
-export default function Content() {
+export default function Content({ user, token, setUserInfo }) {
 
-  React.useEffect(() => {
-    const config = {
-      method: "GET",
-      header: {
-        'Content-Type': 'applicaiton/json',
-        'Accepts': 'application/json'
-      }
+  const [data, status, message] = useFetch('index', user)
+
+  const handleLogout = () => {
+    setUserInfo(null)
+    localStorage.clear()
+  }
+
+  const renderEntries = () => {
+    if (message === 'success') {
+      return data.map(entry => {
+        return (
+          <section key={entry.id} style={{marginTop: '30px'}}>
+            <div>{entry.title}</div>
+            <div>{entry.content}</div>
+            <div>{entry.count}</div>
+          </section>
+        )
+      })
+    } else {
+      return (
+        <h1>Entries could not be loaded...</h1>
+      )
     }
-    const route = `${API}/journals`
-    fetch(route, config).then(r => r.json()).then((data) => {
-      console.log(data);
-    })
-  }, [])
-
+  }
   return (
     <div>
       CONTENT
+      <button onClick={handleLogout}>LOGOUT</button>
+      <div>
+        {renderEntries()}
+      </div>
     </div>
   )
 }
