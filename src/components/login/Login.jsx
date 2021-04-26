@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Button from 'react-bootstrap/Button'
 
 const API = "http://localhost:8000/api/v1"
 
@@ -51,8 +52,10 @@ export default function Login({ goBack, setUserInfo }) {
 
   return (
     <div className='login-container'>
-      <button onClick={handleBack}>BACK</button>
-      LOG IN
+      <div className='landing-header'>
+        <button onClick={handleBack}>BACK</button>
+        <span>LOG IN</span>
+      </div>
       <form className = 'login-form'>
         <input className='login-input'
           placeholder='email'
@@ -69,6 +72,7 @@ export default function Login({ goBack, setUserInfo }) {
           onChange={handleTyping}
         />
         <button className='login-button'
+          variant='primary'
           onClick={handleLogin}>
           SUBMIT
         </button>

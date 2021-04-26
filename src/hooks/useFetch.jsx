@@ -67,15 +67,16 @@ export const useFetch = (action, user={}, entryId=null, newEntry={}) => {
     }
     const response = runFetch()
     response.then(r => {
-      setState({
-        ...state,
-        data: r.data,
-        status: r.status,
-        message: r.message,
+      setState(state => {
+        return {
+          ...state,
+          data: r.data,
+          status: r.status,
+          message: r.message,
+        }
       })
     })
-
-  }, [])
+  }, [user])
 
   return [state.data, state.status, state.message]
 

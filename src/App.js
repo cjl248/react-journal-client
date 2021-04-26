@@ -1,4 +1,5 @@
 import './App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 import Content from './components/Content.jsx'
 import Landing from './components/Landing.jsx'
@@ -32,12 +33,14 @@ function App() {
 
   useEffect(() => {
     if (!state.user) {
-      setState({
-        ...state,
-        user: JSON.parse(localStorage.getItem('user'))
+      setState(state => {
+        return {
+          ...state,
+          user: JSON.parse(localStorage.getItem('user'))
+        }
       })
     }
-  }, [])
+  }, [state.user])
 
   return (
     <div className="App">

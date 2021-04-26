@@ -58,7 +58,7 @@ export default function Landing({ setUserInfo }) {
 
   const renderMain = () => {
     if (state.register) {
-      return (<Register goBack={goBack} />)
+      return (<Register goBack={goBack} setUserInfo={setUserInfo} />)
     }
     if (state.login) {
       return (<Login goBack={goBack} setUserInfo={setUserInfo} />)
